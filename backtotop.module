@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Back To Top link using JQuery.
+ * Requires javascript as enabled
+ */
+
+/**
+ * Implementation of hook_init
+ * Add javascript & css
+ */
+function backtotop_init() {
+  drupal_add_library('system', 'effects');
+  drupal_add_js(drupal_get_path('module', 'backtotop') . '/backtotop.js');
+  drupal_add_css(drupal_get_path('module', 'backtotop') . '/backtotop.css', 'module');
+}
+
+/**
+  * Implementation of hook_node_view().
+  */
+ function backtotop_node_view($node, $view_mode, $langcode) {
+  $content='<div id="backtotop">'.t('Back to Top').'</div>';
+     $node->content['scroll'] = array(
+         '#markup' => $content,
+         '#weight' => 10,
+     );
+ }
