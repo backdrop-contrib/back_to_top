@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * @file
+ * Back To Top link using JQuery.
+ * Requires javascript as enabled
+ */
+ 
+ /**
+ * Implements hook_menu().
+ */
+function back_to_top_menu() {
+  $items = array();
+
+  $items['admin/config/user-interface/back_to_top'] = array(
+    'title' => 'Back To Top',
+    'description' => 'Administer Back To Top settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('back_to_top_settings'),
+    'access arguments' => array('access administration pages'),
+    'file' => 'back_to_top.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implementation of hook_init
+ * Add javascript & css but first check if prevent on mobile
+ */
+function back_to_top_init() {
+  $settings = array(
+    'back_to_top_prevent_on_mobile' => variable_get('back_to_top_prevent_on_mobile', TRUE),
+  );
+  
+  if (variable_get('back_to_top_prevent_on_mobile', 'TRUE') && (is_mobile())) {
+    return FALSE;
+  }
+  drupal_add_library('system', 'effects');
+  drupal_add_js(drupal_get_path('module', 'back_to_top') . '/back_to_top.js');
+  drupal_add_css(drupal_get_path('module', 'back_to_top') . '/back_to_top.css', 'module');
+  drupal_add_js(array('back_to_top' => $settings), 'setting');
+}
+
+/**
+ * Implementation of hook_node_view().
+ */
+ function back_to_top_node_view($node, $view_mode, $langcode) {
+  $content='<div id="backtotop">' . t('Back to Top') . '</div>';
+     $node->content['scroll'] = array(
+         '#markup' => $content,
+         '#weight' => 10,
+     );
+ }
+
+/**
+ * Check if mobile or touch device with PHP so javascript and css isn't included in that case 
+ */
+function is_mobile() {
+  if (isset($_SERVER["HTTP_X_WAP_PROFILE"]))
+  return TRUE;
+  if (preg_match("/wap\.|\.wap/i", $_SERVER["HTTP_ACCEPT"]))
+  return TRUE;
+    if (isset($_SERVER["HTTP_USER_AGENT"])) {
+      $user_agents = array(
+      "midp", "j2me", "iphone", "avantg", "docomo", "novarra", "palmos", 
+      "palmsource", "240x320", "opwv", "chtml", "pda", "windows\ ce", "mmp\/", 
+      "blackberry", "mib\/", "symbian", "wireless", "nokia", "hand", "mobi", 
+      "phone", "cdm", "up\.b", "audio", "sie\-", "sec\-", "samsung", "htc", 
+      "mot\-", "mitsu", "sagem", "sony", "alcatel", "lg", "erics", "vx", "nec", 
+      "philips", "mmm", "xx", "panasonic", "sharp", "wap", "sch", "rover", 
+      "pocket", "benq", "java", "pt", "pg", "vox", "amoi", "bird", "compal", 
+      "kg", "voda", "sany", "kdd", "dbt", "sendo", "sgh", "gradi", "jb", "\d\d\di", "moto", 
+      "ipad", "android", "ipod", "webos");
+
+    foreach ($user_agents as $user_string) {
+      if (preg_match("/" . $user_string . "/i", strtolower($_SERVER["HTTP_USER_AGENT"]))) 
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
