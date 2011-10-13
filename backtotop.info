@@ -1,4 +1,0 @@
-name = "Back To Top"
-description = "Back To Top adds a button that hovers in the bottom of your screen and allow users to smoothly scroll up the page using jQuery."
-core = 7.x
-configure = admin/config/user-interface/backtotop
