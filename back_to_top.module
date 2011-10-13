@@ -32,14 +32,77 @@ function back_to_top_menu() {
 function back_to_top_init() {
   $settings = array(
     'back_to_top_prevent_on_mobile' => variable_get('back_to_top_prevent_on_mobile', TRUE),
+    'back_to_top_button_type' => variable_get('back_to_top_button_type', 'image'),
   );
-  
   if (variable_get('back_to_top_prevent_on_mobile', 'TRUE') && (is_mobile())) {
     return FALSE;
   }
   drupal_add_library('system', 'effects');
   drupal_add_js(drupal_get_path('module', 'back_to_top') . '/back_to_top.js');
-  drupal_add_css(drupal_get_path('module', 'back_to_top') . '/back_to_top.css', 'module');
+  
+  // Add stylesheet for image or text/css button
+  if ((variable_get('back_to_top_button_type', 'image')) == "text" ) {
+    drupal_add_css(drupal_get_path('module', 'back_to_top') . '/back_to_top_text.css', 'module');
+  }
+  else {
+    drupal_add_css(drupal_get_path('module', 'back_to_top') . '/back_to_top.css', 'module');
+  }
+  
+  // Check variables and add placement
+  if ((variable_get('back_to_top_button_place', '1')) == 2 ) {
+    $css = "#backtotop { left: 10px; }";
+    drupal_add_css($css, 'inline');  
+  }
+  if ((variable_get('back_to_top_button_place', '1')) == 3 ) {
+    $css = "#backtotop { left: 50%; margin-left: -50px; }";
+    drupal_add_css($css, 'inline');  
+  }
+  if ((variable_get('back_to_top_button_place', '1')) == 4 ) {
+    $css = "#backtotop { top: 10px; }";
+    drupal_add_css($css, 'inline');  
+  }
+  if ((variable_get('back_to_top_button_place', '1')) == 5 ) {
+    $css = "#backtotop { top: 10px; left: 10px; }";
+    drupal_add_css($css, 'inline');  
+  }
+  if ((variable_get('back_to_top_button_place', '1')) == 6 ) {
+    $css = "#backtotop { top: 10px; left: 50%; margin-left: -50px; }";
+    drupal_add_css($css, 'inline');  
+  }
+  if ((variable_get('back_to_top_button_place', '1')) == 7 ) {
+    $css = "#backtotop { top: 50%; }";
+    drupal_add_css($css, 'inline');  
+  }
+  if ((variable_get('back_to_top_button_place', '1')) == 8 ) {
+    $css = "#backtotop { top: 50%; left: 10px; }";
+    drupal_add_css($css, 'inline');  
+  }
+  if ((variable_get('back_to_top_button_place', '1')) == 9 ) {
+    $css = "#backtotop { top: 50%; left: 50%; margin-left: -50px; }";
+    drupal_add_css($css, 'inline');  
+  }
+  // Check variables and add color from settings - this code could be done a bit nicer
+  if (((variable_get('back_to_top_button_type', 'image')) == "text" ) && ((variable_get('back_to_top_bg_color', '#F7F7F7')) !== '#F7F7F7' )) {
+    $setting = variable_get('back_to_top_bg_color', '#F7F7F7');
+    $css = "#backtotop { background: " . $setting . "; }";
+    drupal_add_css($css, 'inline');  
+  }
+  if (((variable_get('back_to_top_button_type', 'image')) == "text" ) && ((variable_get('back_to_top_border_color', '#CCCCCC')) !== '#CCCCCC' )) {
+    $setting = variable_get('back_to_top_bg_color', '#CCCCCC');
+    $css = "#backtotop { border-color: " . $setting . "; }";
+    drupal_add_css($css, 'inline');  
+  }
+  if (((variable_get('back_to_top_button_type', 'image')) == "text" ) && ((variable_get('back_to_top_hover_color', '#EEEEEE')) !== '#EEEEEE' )) {
+    $setting = variable_get('back_to_top_hover_color', '#EEEEEE');
+    $css = "#backtotop:hover { background: " . $setting . "; border-color: " . $setting . "; }";
+    drupal_add_css($css, 'inline');  
+  }
+  if (((variable_get('back_to_top_button_type', 'image')) == "text" ) && ((variable_get('back_to_top_text_color', '#333333')) !== '#333333' )) {
+    $setting = variable_get('back_to_top_text_color', '#333333');
+    $css = "#backtotop { color: " . $setting . "; }";
+    drupal_add_css($css, 'inline');  
+  }
+  // Add settings to js
   drupal_add_js(array('back_to_top' => $settings), 'setting');
 }
 
