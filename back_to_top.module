@@ -32,11 +32,15 @@ function back_to_top_menu() {
 function back_to_top_init() {
   $settings = array(
     'back_to_top_prevent_on_mobile' => variable_get('back_to_top_prevent_on_mobile', TRUE),
+    'back_to_top_prevent_in_admin' => variable_get('back_to_top_prevent_in_admin', TRUE),
     'back_to_top_button_type' => variable_get('back_to_top_button_type', 'image'),
   );
   if (variable_get('back_to_top_prevent_on_mobile', 'TRUE') && (is_mobile())) {
     return FALSE;
   }
+	if (variable_get('back_to_top_prevent_in_admin', 'TRUE') && (is_adminpage())) {
+		return FALSE;
+	}
   drupal_add_library('system', 'effects');
   drupal_add_js(drupal_get_path('module', 'back_to_top') . '/back_to_top.js', array('group' => JS_DEFAULT, 'every_page' => TRUE));
   
@@ -112,7 +116,7 @@ function back_to_top_init() {
 function is_mobile() {
   if (isset($_SERVER["HTTP_X_WAP_PROFILE"]))
   return TRUE;
-  if (isset($_SERVER['HTTP_ACCEPT']) and (preg_match("/wap\.|\.wap/i", $_SERVER["HTTP_ACCEPT"])))
+  if (preg_match("/wap\.|\.wap/i", $_SERVER["HTTP_ACCEPT"]))
   return TRUE;
     if (isset($_SERVER["HTTP_USER_AGENT"])) {
       $user_agents = array(
@@ -132,4 +136,12 @@ function is_mobile() {
     }
   }
   return FALSE;
+}
+
+/**
+ * Check if page viewed is in admin section or a node/edit for possible option to not include javascript and css in that case 
+ */
+function is_adminpage() {
+	if ((arg(0) == 'admin') || (arg(2) == 'edit'))
+	return TRUE;
 }
