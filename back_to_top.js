@@ -3,7 +3,7 @@ Drupal.behaviors.backtotop = {
       (function($) {
       $("body").append("<div id='backtotop'>"+Drupal.t("Back to Top")+"</div>");
       $(window).scroll(function() {
-        if($(this).scrollTop() != 0) {
+        if($(this).scrollTop() > 100) {
           $('#backtotop').fadeIn();	
         } else {
           $('#backtotop').fadeOut();
