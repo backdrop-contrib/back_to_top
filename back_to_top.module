@@ -124,7 +124,7 @@ function is_mobile() {
       "palmsource", "240x320", "opwv", "chtml", "pda", "windows\ ce", "mmp\/", 
       "blackberry", "mib\/", "symbian", "wireless", "nokia", "hand", "mobi", 
       "phone", "cdm", "up\.b", "audio", "sie\-", "sec\-", "samsung", "htc", 
-      "mot\-", "mitsu", "sagem", "sony", "alcatel", "lg", "erics", "vx", "nec", 
+      "mot\-", "mitsu", "sagem", "sony", "alcatel", "lg", "erics", "vx", "^nec", 
       "philips", "mmm", "xx", "panasonic", "sharp", "wap", "sch", "rover", 
       "pocket", "benq", "java", "pt", "pg", "vox", "amoi", "bird", "compal", 
       "kg", "voda", "sany", "kdd", "dbt", "sendo", "sgh", "gradi", "jb", "\d\d\di", "moto", 
