@@ -1,7 +1,10 @@
 (function ($) {
 	Drupal.behaviors.backtotop = {
 		attach: function(context) {
-			$("body").append("<div id='backtotop'>"+Drupal.t("Back to Top")+"</div>");
+			var exist= jQuery('#backtotop').length;
+      if(exist == 0) {
+        $("body").append("<div id='backtotop'>"+Drupal.t("Back to Top")+"</div>");
+      }
 			$(window).scroll(function() {
 				if($(this).scrollTop() > 100) {
 					$('#backtotop').fadeIn();	
