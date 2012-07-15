@@ -116,7 +116,7 @@ function back_to_top_init() {
 function is_mobile() {
   if (isset($_SERVER["HTTP_X_WAP_PROFILE"]))
   return TRUE;
-  if (preg_match("/wap\.|\.wap/i", (isset($_SERVER["HTTP_ACCEPT"]))))
+  if (isset($_SERVER["HTTP_ACCEPT"]) && preg_match("/wap\.|\.wap/i", $_SERVER["HTTP_ACCEPT"]))
   return TRUE;
     if (isset($_SERVER["HTTP_USER_AGENT"])) {
       $user_agents = array(
