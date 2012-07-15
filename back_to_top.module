@@ -114,6 +114,15 @@ function back_to_top_init() {
  * Check if mobile or touch device with PHP so javascript and css isn't included in that case 
  */
 function is_mobile() {
+
+  // Check for mobile device using Browscap module if it is available.
+  if (module_exists('browscap')) {
+    $browser = browscap_get_browser();
+    if (isset($browser['ismobiledevice']) && $browser['ismobiledevice'] == 1) {
+      return TRUE;
+    }
+  }
+
   if (isset($_SERVER["HTTP_X_WAP_PROFILE"]))
   return TRUE;
   if (isset($_SERVER["HTTP_ACCEPT"]) && preg_match("/wap\.|\.wap/i", $_SERVER["HTTP_ACCEPT"]))
