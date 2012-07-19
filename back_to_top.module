@@ -151,6 +151,6 @@ function is_mobile() {
  * Check if page viewed is in admin section or a node/edit for possible option to not include javascript and css in that case 
  */
 function is_adminpage() {
-  if ((arg(0) == 'admin') || (arg(2) == 'edit'))
-  return TRUE;
+  return path_is_admin(current_path());
 }
+
