@@ -7,7 +7,12 @@
  */
 
 function back_to_top_settings($form_state) {
-  
+
+  // Include Farbtastic color picker library and other necessary resources.
+  drupal_add_library('system', 'farbtastic');
+  drupal_add_js(drupal_get_path('module', 'back_to_top') . '/js/back_to_top.admin.js');
+  drupal_add_css(drupal_get_path('module', 'back_to_top') . '/css/back_to_top.admin.css');
+
   $form['back_to_top_prevent_on_mobile'] = array(
     '#type' => 'checkbox',
     '#title' => t('Prevent on mobile and touch devices'),
@@ -19,15 +24,6 @@ function back_to_top_settings($form_state) {
     '#title' => t('Prevent on administration pages and node edit'),
     '#description' => t('Do you want to prevent Back To Top on admin pages?'),
     '#default_value' => variable_get('back_to_top_prevent_in_admin', TRUE),
-  );
-  $form['back_to_top_button_type'] = array(
-    '#type' => 'radios',
-    '#title' => t('Do you want Back To Top to use a PNG-24 image or a Text/Css button?'),
-    '#options' => array(
-    'image' => t('Image (default)'),
-    'text' => t('Text/Css')
-    ),
-    '#default_value' => variable_get('back_to_top_button_type', 'image'),
   );
   $form['back_to_top_button_place'] = array(
     '#title' => t('Placement'),
@@ -46,37 +42,58 @@ function back_to_top_settings($form_state) {
     ),
     '#default_value' => variable_get('back_to_top_button_place', 1),
   );
-  $form['back_to_top_bg_color'] = array(
+  $form['back_to_top_button_type'] = array(
+    '#type' => 'radios',
+    '#title' => t('Do you want Back To Top to use a PNG-24 image or a Text/Css button?'),
+    '#options' => array(
+    'image' => t('Image (default)'),
+    'text' => t('Text/Css')
+    ),
+    '#default_value' => variable_get('back_to_top_button_type', 'image'),
+  );
+
+  // Wrap Text/Css button settings in a fieldset.
+  $form['text_button'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Text/Css button settings'),
+    '#collapsible' => TRUE,
+    '#collapsed' => ($form['back_to_top_button_type']['#default_value'] == 'image' ? TRUE : FALSE),
+  );
+  $form['text_button']['back_to_top_bg_color'] = array(
     '#type' => 'textfield',
-    '#title' => t('Text/css button background color'),
+    '#title' => t('Background color'),
     '#description' => t('Button background color default #F7F7F7'),
     '#default_value' => variable_get('back_to_top_bg_color', '#F7F7F7'),
     '#size' => 10,
     '#maxlength' => 7,
+    '#suffix' => '<div class="color-field" id="back_to_top_bg_color"></div>',
   );
-  $form['back_to_top_border_color'] = array(
+  $form['text_button']['back_to_top_border_color'] = array(
     '#type' => 'textfield',
-    '#title' => t('Text/css border color'),
+    '#title' => t('Border color'),
     '#description' => t('Border color default #CCCCCC'),
     '#default_value' => variable_get('back_to_top_border_color', '#CCCCCC'),
     '#size' => 10,
     '#maxlength' => 7,
+    '#suffix' => '<div class="color-field" id="back_to_top_border_color"></div>',
   );
-  $form['back_to_top_hover_color'] = array(
+  $form['text_button']['back_to_top_hover_color'] = array(
     '#type' => 'textfield',
-    '#title' => t('Text/css hover color'),
+    '#title' => t('Hover color'),
     '#description' => t('Hover color default #EEEEEE'),
     '#default_value' => variable_get('back_to_top_hover_color', '#EEEEEE'),
     '#size' => 10,
     '#maxlength' => 7,
+    '#suffix' => '<div class="color-field" id="back_to_top_hover_color"></div>',
   );
-  $form['back_to_top_text_color'] = array(
+  $form['text_button']['back_to_top_text_color'] = array(
     '#type' => 'textfield',
-    '#title' => t('Text/css text color'),
+    '#title' => t('Text color'),
     '#description' => t('Text color default #333333'),
     '#default_value' => variable_get('back_to_top_text_color', '#333333'),
     '#size' => 10,
     '#maxlength' => 7,
+    '#suffix' => '<div class="color-field" id="back_to_top_text_color"></div>',
   );
   return system_settings_form($form);
 }

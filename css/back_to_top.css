@@ -1,5 +1,5 @@
 #backtotop {
-  background: url(backtotop.png) no-repeat center center;
+  background: url(../backtotop.png) no-repeat center center;
   bottom: 20px;
   cursor: pointer;
   display: none;
