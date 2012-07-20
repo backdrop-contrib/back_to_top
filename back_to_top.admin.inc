@@ -25,6 +25,14 @@ function back_to_top_settings($form_state) {
     '#description' => t('Do you want to prevent Back To Top on admin pages?'),
     '#default_value' => variable_get('back_to_top_prevent_in_admin', TRUE),
   );
+  $form['back_to_top_button_trigger'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Trigger'),
+    '#description' => t('Set the number of pixel which trigger the Back To Top button default 100'),
+    '#default_value' => variable_get('back_to_top_button_trigger', 100),
+    '#size' => 10,
+    '#maxlength' => 4,
+  );
   $form['back_to_top_button_place'] = array(
     '#title' => t('Placement'),
     '#description' => t('Where should the Back To Top button appear?'),

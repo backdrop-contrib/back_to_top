@@ -6,7 +6,7 @@
         $("body").append("<div id='backtotop'>"+Drupal.t("Back to Top")+"</div>");
       }
 			$(window).scroll(function() {
-				if($(this).scrollTop() > 100) {
+				if($(this).scrollTop() > Drupal.settings.back_to_top.back_to_top_button_trigger) {
 					$('#backtotop').fadeIn();	
 				} else {
 					$('#backtotop').fadeOut();
