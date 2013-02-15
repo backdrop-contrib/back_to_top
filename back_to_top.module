@@ -41,7 +41,10 @@ function back_to_top_init() {
   if (variable_get('back_to_top_prevent_in_admin', 'TRUE') && (is_adminpage())) {
     return FALSE;
   }
+  drupal_add_js('//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js');
   drupal_add_library('system', 'effects');
+  $settings['#attached']['library'][] = array('system', 'ui');
+  
   drupal_add_js(drupal_get_path('module', 'back_to_top') . '/js/back_to_top.js', array('group' => JS_DEFAULT, 'every_page' => TRUE));
   
   drupal_add_js(array('back_to_top' => array('back_to_top_button_trigger' => variable_get('back_to_top_button_trigger', 100))), 'setting');
@@ -156,3 +159,27 @@ function is_adminpage() {
   return path_is_admin(current_path());
 }
 
+/**
+ * Implements hook_permission().
+ */
+function back_to_top_permission() {
+  return array(
+    'access back to top settings' => array(
+      'title' => t('Access Back to top settings'),
+      'description' => t('Access Back to top settings.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_install()
+ * Add default permission for access settings to administrator
+ */
+function back_to_top_install() {
+  // rid=3 => administrator
+  user_role_change_permissions(3, 
+    array(
+      'access back to top settings' => TRUE,
+     )
+   );
+}
