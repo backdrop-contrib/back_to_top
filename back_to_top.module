@@ -17,7 +17,7 @@ function back_to_top_menu() {
     'description' => 'Administer Back To Top settings',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('back_to_top_settings'),
-    'access arguments' => array('access administration pages'),
+    'access arguments' => array('access back_to_top settings'),
     'file' => 'back_to_top.admin.inc',
     'type' => MENU_NORMAL_ITEM,
   );
@@ -164,7 +164,7 @@ function is_adminpage() {
  */
 function back_to_top_permission() {
   return array(
-    'access back to top settings' => array(
+    'access back_to_top settings' => array(
       'title' => t('Access Back to top settings'),
       'description' => t('Access Back to top settings.'),
     ),
@@ -179,7 +179,7 @@ function back_to_top_install() {
   // rid=3 => administrator
   user_role_change_permissions(3, 
     array(
-      'access back to top settings' => TRUE,
+      'access back_to_top settings' => TRUE,
      )
    );
 }
