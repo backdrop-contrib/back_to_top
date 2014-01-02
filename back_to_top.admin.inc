@@ -25,6 +25,12 @@ function back_to_top_settings($form_state) {
     '#description' => t('Do you want to prevent Back To Top on admin pages?'),
     '#default_value' => variable_get('back_to_top_prevent_in_admin', TRUE),
   );
+  $form['back_to_top_prevent_in_front'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Prevent on front page'),
+    '#description' => t('Do you want to prevent Back To Top on front page?'),
+    '#default_value' => variable_get('back_to_top_prevent_in_front', FALSE),
+  );
   $form['back_to_top_button_trigger'] = array(
     '#type' => 'textfield',
     '#title' => t('Trigger'),

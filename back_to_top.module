@@ -42,6 +42,9 @@ function back_to_top_init() {
   if (variable_get('back_to_top_prevent_in_admin', 'TRUE') && (is_adminpage())) {
     return FALSE;
   }
+  if (variable_get('back_to_top_prevent_in_front', 'TRUE') && (drupal_is_front_page())) {
+    return FALSE;
+  }
   drupal_add_library('system', 'effects');
   $settings['#attached']['library'][] = array('system', 'ui');
   
