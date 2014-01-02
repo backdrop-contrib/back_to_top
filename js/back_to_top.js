@@ -3,7 +3,7 @@
 		attach: function(context) {
 			var exist= jQuery('#backtotop').length;
       if(exist == 0) {
-        $("body").append("<div id='backtotop'>"+Drupal.t("Back to Top")+"</div>");
+        $("body").append("<div id='backtotop'>"+Drupal.t(Drupal.settings.back_to_top.back_to_top_button_text)+"</div>");
       }
 			$(window).scroll(function() {
 				if($(this).scrollTop() > Drupal.settings.back_to_top.back_to_top_button_trigger) {

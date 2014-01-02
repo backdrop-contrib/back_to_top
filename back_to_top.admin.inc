@@ -50,6 +50,14 @@ function back_to_top_settings($form_state) {
     ),
     '#default_value' => variable_get('back_to_top_button_place', 1),
   );
+  $form['back_to_top_button_text'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Button text',
+    '#description' => 'Set the text of the Back To Top button',
+    '#default_value' => variable_get('back_to_top_button_text', "Back to top"),
+    '#size' => 30,
+    '#maxlength' => 30,
+  );
   $form['back_to_top_button_type'] = array(
     '#type' => 'radios',
     '#title' => t('Do you want Back To Top to use a PNG-24 image or a Text/Css button?'),
