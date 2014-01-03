@@ -7,9 +7,9 @@
  */
  
  /**
- * Implements hook_menu().
+ * Implements hook_page_build().
  */
-function back_to_top_menu() {
+function back_to_top_page_build() {
   $items = array();
 
   $items['admin/config/user-interface/back_to_top'] = array(
