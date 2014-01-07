@@ -7,9 +7,9 @@
  */
  
  /**
- * Implements hook_page_build().
+ * Implements hook_page_menu().
  */
-function back_to_top_page_build() {
+function back_to_top_menu() {
   $items = array();
 
   $items['admin/config/user-interface/back_to_top'] = array(
@@ -26,10 +26,10 @@ function back_to_top_page_build() {
 }
 
 /**
- * Implementation of hook_init
+ * Implementation of hook_page_build
  * Add javascript & css but first check if prevent on mobile
  */
-function back_to_top_init() {
+function back_to_top_page_build() {
   $settings = array(
     'back_to_top_prevent_on_mobile' => variable_get('back_to_top_prevent_on_mobile', TRUE),
     'back_to_top_prevent_in_admin' => variable_get('back_to_top_prevent_in_admin', TRUE),
