@@ -46,7 +46,7 @@ function back_to_top_settings($form_state) {
     '#options' => array(
       1 => t('Bottom right'),
       2 => t('Bottom left'),
-      3 => t('Botton center'),
+      3 => t('Bottom center'),
       4 => t('Top right'),
       5 => t('Top left'),
       6 => t('Top center'),
