@@ -5,6 +5,16 @@
  * Back To Top link using JQuery.
  * Requires javascript as enabled
  */
+
+/**
+ * Shows Back To Top on every page except the listed pages.
+ */
+define('BACK_TO_TOP_VISIBILITY_NOTLISTED', 0);
+
+/**
+ * Shows Back To Top on only the listed pages.
+ */
+define('BACK_TO_TOP_VISIBILITY_LISTED', 1);
  
  /**
  * Implements hook_page_menu().
@@ -45,6 +55,21 @@ function back_to_top_page_build() {
   if (variable_get('back_to_top_prevent_in_front', 'TRUE') && (drupal_is_front_page())) {
     return FALSE;
   }
+  $pages = drupal_strtolower(variable_get('back_to_top_pages', ''));
+  $visibility = (int)variable_get('back_to_top_visibility', BACK_TO_TOP_VISIBILITY_NOTLISTED);
+  $path = drupal_strtolower(drupal_get_path_alias($_GET['q']));
+  $page_match = drupal_match_path($path, $pages);
+  // Compare the lowercase internal and lowercase path alias (if any).
+  $page_match = drupal_match_path($path, $pages);
+  if ($path != $_GET['q']) {
+    $page_match = $page_match || drupal_match_path($_GET['q'], $pages);
+  }
+  $page_match = !($visibility xor $page_match);
+
+  if (!$page_match) {
+    return FALSE;
+  }
+
   drupal_add_library('system', 'effects');
   $settings['#attached']['library'][] = array('system', 'ui');
   

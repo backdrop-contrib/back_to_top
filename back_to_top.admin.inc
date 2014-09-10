@@ -31,6 +31,24 @@ function back_to_top_settings($form_state) {
     '#description' => t('Do you want to prevent Back To Top on front page?'),
     '#default_value' => variable_get('back_to_top_prevent_in_front', FALSE),
   );
+  $options = array(
+    BACK_TO_TOP_VISIBILITY_NOTLISTED => t('All pages except those listed'),
+    BACK_TO_TOP_VISIBILITY_LISTED => t('Only the listed pages'),
+  );
+  $description = t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>'));
+  $form['back_to_top_visibility'] = array(
+    '#type' => 'radios',
+    '#title' => t('Show Back To Top on specific pages'),
+    '#options' => $options,
+    '#default_value' => variable_get('back_to_top_visibility', BACK_TO_TOP_VISIBILITY_NOTLISTED),
+  );
+  $form['back_to_top_pages'] = array(
+    '#type' => 'textarea',
+    '#title' => '',
+    '#default_value' => variable_get('back_to_top_pages', ''),
+    '#description' => $description,
+  );
+
   $form['back_to_top_button_trigger'] = array(
     '#type' => 'textfield',
     '#title' => t('Trigger'),
