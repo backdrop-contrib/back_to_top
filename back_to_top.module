@@ -1,0 +1,199 @@
+<?php
+
+/**
+ * @file
+ * Back To Top link using JQuery.
+ * Requires javascript as enabled
+ */
+ 
+ /**
+ * Implements hook_config_info().
+ */
+function back_to_top_config_info() {
+  $prefixes['back_to_top.settings'] = array(
+    'label' => t('back_to_top settings'),
+    'group' => t('Configuration'),
+  );
+  return $prefixes;
+}
+ 
+ /**
+ * Implements hook_page_menu().
+ */
+function back_to_top_menu() {
+  $items = array();
+
+  $items['admin/config/user-interface/back_to_top'] = array(
+    'title' => 'Back To Top',
+    'description' => 'Administer Back To Top settings',
+    'page callback' => 'backdrop_get_form',
+    'page arguments' => array('back_to_top_settings'),
+    'access arguments' => array('access back_to_top settings'),
+    'file' => 'back_to_top.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+
+  return $items;
+}
+
+/**
+ * Implementation of hook_page_build
+ * Add javascript & css but first check if prevent on mobile
+ */
+function back_to_top_init() {
+  $settings = array(
+    'back_to_top_prevent_on_mobile' => config_get('back_to_top.settings', 'back_to_top_prevent_on_mobile'),
+    'back_to_top_prevent_in_admin' => config_get('back_to_top.settings', 'back_to_top_prevent_in_admin'),
+    'back_to_top_button_type' => config_get('back_to_top.settings', 'back_to_top_button_type'),
+    'back_to_top_button_text' => config_get('back_to_top.settings', 'back_to_top_button_text'),
+  );
+  if (config_get('back_to_top.settings', 'back_to_top_prevent_on_mobile') && (is_mobile())) {
+    return FALSE;
+  }
+  if (config_get('back_to_top.settings', 'back_to_top_prevent_in_admin') && (is_adminpage())) {
+    return FALSE;
+  }
+  if (config_get('back_to_top.settings', 'back_to_top_prevent_in_front') && (backdrop_is_front_page())) { 
+    return FALSE;
+  }
+  backdrop_add_library('system', 'effects');
+  $settings['#attached']['library'][] = array('system', 'ui');
+  
+  backdrop_add_js(backdrop_get_path('module', 'back_to_top') . '/js/back_to_top.js', array('group' => JS_DEFAULT, 'every_page' => TRUE));
+  
+  backdrop_add_js(array('back_to_top' => array('back_to_top_button_trigger' => config_get('back_to_top.settings', 'back_to_top_button_trigger'))), 'setting');
+  
+  // Add stylesheet for image or text/css button 
+  if ((config_get('back_to_top.settings', 'back_to_top_button_type')) == "text" ) {
+    backdrop_add_css(backdrop_get_path('module', 'back_to_top') . '/css/back_to_top_text.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+  }
+  else {
+    backdrop_add_css(backdrop_get_path('module', 'back_to_top') . '/css/back_to_top.css', array('group' => CSS_DEFAULT, 'every_page' => TRUE));
+  }
+  
+  // Check variables and add placement
+  if (config_get('back_to_top.settings', 'back_to_top_button_place') == 2 ) {
+    $css = "#backtotop { left: 10px; }";
+    backdrop_add_css($css, 'inline');  
+  }
+  if (config_get('back_to_top.settings', 'back_to_top_button_place') == 3 ) { 
+    $css = "#backtotop { left: 50%; margin-left: -50px; }";
+    backdrop_add_css($css, 'inline');  
+  }
+  if (config_get('back_to_top.settings', 'back_to_top_button_place') == 4 ) {
+    $css = "#backtotop { top: 10px; }";
+    backdrop_add_css($css, 'inline');  
+  }
+  if (config_get('back_to_top.settings', 'back_to_top_button_place') == 5 ) {
+    $css = "#backtotop { top: 10px; left: 10px; }";
+    backdrop_add_css($css, 'inline');  
+  }
+  if (config_get('back_to_top.settings', 'back_to_top_button_place') == 6 ) {
+    $css = "#backtotop { top: 10px; left: 50%; margin-left: -50px; }";
+    backdrop_add_css($css, 'inline');  
+  }
+  if (config_get('back_to_top.settings', 'back_to_top_button_place') == 7 ) {
+    $css = "#backtotop { top: 50%; }";
+    backdrop_add_css($css, 'inline');  
+  }
+  if (config_get('back_to_top.settings', 'back_to_top_button_place') == 8 ) {
+    $css = "#backtotop { top: 50%; left: 10px; }";
+    backdrop_add_css($css, 'inline');  
+  }
+  if (config_get('back_to_top.settings', 'back_to_top_button_place') == 9 ) {
+    $css = "#backtotop { top: 50%; left: 50%; margin-left: -50px; }";
+    backdrop_add_css($css, 'inline');  
+  } 
+  // Check variables and add color from settings - this code could be done a bit nicer
+  if (((config_get('back_to_top.settings', 'back_to_top_button_type')) == "text" ) && ((config_get('back_to_top.settings', 'back_to_top_bg_color')) !== '#F7F7F7' )) {
+    $setting = config_get('back_to_top.settings', 'back_to_top_bg_color'); 
+    $css = "#backtotop { background: " . $setting . "; }";
+    backdrop_add_css($css, 'inline');  
+  } 
+  if (((config_get('back_to_top.settings', 'back_to_top_button_type')) == "text" ) && ((config_get('back_to_top.settings', 'back_to_top_border_color')) !== '#CCCCCC' )) {
+    $setting = config_get('back_to_top.settings', 'back_to_top_bg_color');
+    $css = "#backtotop { border-color: " . $setting . "; }";
+    backdrop_add_css($css, 'inline');  
+  } 
+  if (((config_get('back_to_top.settings', 'back_to_top_button_type')) == "text" ) && ((config_get('back_to_top.settings', 'back_to_top_hover_color')) !== '#EEEEEE' )) {
+    $setting = config_get('back_to_top.settings', 'back_to_top_hover_color');
+    $css = "#backtotop:hover { background: " . $setting . "; border-color: " . $setting . "; }";
+    backdrop_add_css($css, 'inline');  
+  }  
+  if (((config_get('back_to_top.settings', 'back_to_top_button_type')) == "text" ) && ((config_get('back_to_top.settings', 'back_to_top_text_color')) !== '#333333' )) {
+    $setting = config_get('back_to_top.settings', 'back_to_top_text_color');
+    $css = "#backtotop { color: " . $setting . "; }";
+    backdrop_add_css($css, 'inline');  
+  }
+  // Add settings to js
+  backdrop_add_js(array('back_to_top' => $settings), 'setting');
+}
+
+/**
+ * Check if mobile or touch device with PHP so javascript and css isn't included in that case 
+ */
+function is_mobile() {
+
+  // Check for mobile device using Browscap module if it is available.
+  if (module_exists('browscap')) {
+    $browser = browscap_get_browser();
+    if (isset($browser['ismobiledevice']) && $browser['ismobiledevice'] == 1) {
+      return TRUE;
+    }
+  }
+
+  if (isset($_SERVER["HTTP_X_WAP_PROFILE"]))
+  return TRUE;
+  if (isset($_SERVER["HTTP_ACCEPT"]) && preg_match("/wap\.|\.wap/i", $_SERVER["HTTP_ACCEPT"]))
+  return TRUE;
+    if (isset($_SERVER["HTTP_USER_AGENT"])) {
+      $user_agents = array(
+      "midp", "j2me", "iphone", "avantg", "docomo", "novarra", "palmos", 
+      "palmsource", "240x320", "opwv", "chtml", "pda", "windows\ ce", "mmp\/", 
+      "blackberry", "mib\/", "symbian", "wireless", "nokia", "hand", "mobi", 
+      "phone", "cdm", "up\.b", "audio", "sie\-", "sec\-", "samsung", "htc", 
+      "mot\-", "mitsu", "sagem", "sony", "alcatel", "lg", "erics", "vx", "^nec", 
+      "philips", "mmm", "xx", "panasonic", "sharp", "wap", "sch", "rover", 
+      "pocket", "benq", "java", "pt", "pg", "vox", "amoi", "bird", "compal", 
+      "kg", "voda", "sany", "kdd", "dbt", "sendo", "sgh", "gradi", "jb", "\d\d\di", "moto", 
+      "ipad", "android", "ipod", "webos");
+
+    foreach ($user_agents as $user_string) {
+      if (preg_match("/" . $user_string . "/i", strtolower($_SERVER["HTTP_USER_AGENT"]))) 
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Check if page viewed is in admin section or a node/edit for possible option to not include javascript and css in that case 
+ */
+function is_adminpage() {
+  return path_is_admin(current_path());
+}
+
+/**
+ * Implements hook_permission().
+ */
+function back_to_top_permission() {
+  return array(
+    'access back_to_top settings' => array(
+      'title' => t('Access Back to top settings'),
+      'description' => t('Access Back to top settings.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_install()
+ * Add default permission for access settings to administrator
+ */
+function back_to_top_install() {
+  // rid=3 => administrator
+  user_role_change_permissions(3, 
+    array(
+      'access back_to_top settings' => TRUE,
+     )
+   );
+}

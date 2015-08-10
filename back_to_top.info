@@ -1,0 +1,6 @@
+name = Back To Top
+description = Back To Top adds a button that hovers in the bottom of your screen and allow users to smoothly scroll up the page using jQuery.
+backdrop = 1.x
+version = 1.x-1.1
+type = module
+configure = admin/config/user-interface/back_to_top
