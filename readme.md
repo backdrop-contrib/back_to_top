@@ -1,6 +1,17 @@
 BACK TO TOP
 ===================
 
+Back To Top adds a button that hovers in the bottom of your screen and allow users to smoothly scroll up the page using jQuery.
+
+Back To Top uses jQuery UI library effects for smooth easing of scroll.
+
+There are settings for:
+
+  * Preventing the button to appear in mobile or touch devices.
+  * Choosing between a image or text/css button
+  * Placement of the button
+  * Appearence of the text/css button
+
 CONTENTS OF THIS FILE
 ---------------------
 
@@ -15,20 +26,6 @@ CONTENTS OF THIS FILE
  - License
  - Credits
  - Maintainers
-
-INTRODUCTION
-------------
-
-Back To Top adds a button that hovers in the bottom of your screen and allow users to smoothly scroll up the page using jQuery.
-
-Back To Top uses jQuery UI library effects for smooth easing of scroll.
-
-There are settings for:
-
-  * Preventing the button to appear in mobile or touch devices.
-  * Choosing between a image or text/css button
-  * Placement of the button
-  * Appearence of the text/css button
 
 TESTED
 -----
