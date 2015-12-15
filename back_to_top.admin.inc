@@ -80,7 +80,7 @@ function back_to_top_settings($form_state) {
     '#description' => 'Set the text of the Back To Top button',
     '#default_value' => variable_get('back_to_top_button_text', "Back to top"),
     '#size' => 30,
-    '#maxlength' => 30,
+    '#maxlength' => 100,
   );
   $form['back_to_top_button_type'] = array(
     '#type' => 'radios',
