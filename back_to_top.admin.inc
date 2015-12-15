@@ -19,6 +19,12 @@ function back_to_top_settings($form_state) {
     '#description' => t('Do you want to prevent Back To Top on touch devices?'),
     '#default_value' => variable_get('back_to_top_prevent_on_mobile', TRUE),
   );
+  $form['back_to_top_prevent_on_non_mobile'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Prevent on non mobile and touch devices'),
+    '#description' => t('Do you want to prevent Back To Top on desktop?'),
+    '#default_value' => variable_get('back_to_top_prevent_on_non_mobile', FALSE),
+  );
   $form['back_to_top_prevent_in_admin'] = array(
     '#type' => 'checkbox',
     '#title' => t('Prevent on administration pages and node edit'),
