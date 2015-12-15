@@ -35,7 +35,11 @@ function back_to_top_settings($form_state) {
     BACK_TO_TOP_VISIBILITY_NOTLISTED => t('All pages except those listed'),
     BACK_TO_TOP_VISIBILITY_LISTED => t('Only the listed pages'),
   );
-  $description = t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array('%blog' => 'blog', '%blog-wildcard' => 'blog/*', '%front' => '<front>'));
+  $description = t("Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. Example paths are %blog for the blog page and %blog-wildcard for every personal blog. %front is the front page.", array(
+    '%blog' => 'blog',
+    '%blog-wildcard' => 'blog/*',
+    '%front' => '<front>',
+  ));
   $form['back_to_top_visibility'] = array(
     '#type' => 'radios',
     '#title' => t('Show Back To Top on specific pages'),
@@ -86,8 +90,8 @@ function back_to_top_settings($form_state) {
     '#type' => 'radios',
     '#title' => t('Do you want Back To Top to use a PNG-24 image or a Text/Css button?'),
     '#options' => array(
-    'image' => t('Image (default)'),
-    'text' => t('Text/Css')
+      'image' => t('Image (default)'),
+      'text' => t('Text/Css'),
     ),
     '#default_value' => variable_get('back_to_top_button_type', 'image'),
   );
