@@ -21,3 +21,9 @@
     background-size: 70px 70px;
   }
 }
+
+@media print {
+  #backtotop {
+    visibility: hidden;
+  }
+}
