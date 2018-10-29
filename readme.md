@@ -93,7 +93,7 @@ Enjoy!
 MAINTAINERS
 -----------
 
--- seeking
+- Peter Anderson (https://githib.com/BWPanda)
 
 Ported to Backdrop by:
 
