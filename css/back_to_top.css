@@ -1,41 +1,41 @@
+/**
+ * @file
+ * Styles for the Back To Top module.
+ */
+
 #backtotop {
-  background: url(../backtotop.png) no-repeat center center;
-  bottom: 20px;
   cursor: pointer;
   display: none;
-  height: 70px;
+  opacity: 0.8;
   position: fixed;
-  right: 20px;
-  text-indent:-9999px;
-  width: 70px;
   z-index: 1;
 }
 
 #backtotop:hover {
-  opacity: 0.8;
+  opacity: 1;
 }
 
-<!--[if lte IE 6]>
-html {
-  overflow-x: auto;
-  overflow-y: hidden;
+#backtotop.image {
+  background: url(../images/backtotop.png) center center no-repeat;
+  height: 70px;
+  text-indent: -9999px;
+  width: 70px;
 }
 
-* html #backtotop {
-  position:absolute;
-}
-<![endif]-->
-
-@media (-webkit-min-device-pixel-ratio: 2),
-(min-resolution: 192dpi) {
-
-  #backtotop {
-    background: url(../backtotop2x.png) no-repeat center center;
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  #backtotop.image {
+    background-image: url(../images/backtotop2x.png);
     background-size: 70px 70px;
   }
-
 }
 
-
-
+#backtotop.text {
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 0.5em 1em;
+  text-align: center;
+}
 

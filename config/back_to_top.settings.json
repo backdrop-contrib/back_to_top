@@ -1,16 +1,14 @@
 {
     "_config_name": "back_to_top.settings",
-"back_to_top_prevent_on_mobile": "TRUE",
-"back_to_top_prevent_in_admin": "TRUE",
-"back_to_top_prevent_in_front": "FALSE",
-"back_to_top_button_trigger": "100",
-
-"back_to_top_button_place": "1",
-"back_to_top_button_text": "Back to top",
-"back_to_top_button_type": "image",
-"back_to_top_bg_color": "#F7F7F7",
-
-"back_to_top_border_color": "#CCCCCC",
-"back_to_top_hover_color": "#EEEEEE",
-"back_to_top_text_color": "#333333"
+    "disable_mobile": 1,
+    "disable_admin": 1,
+    "disable_front": 0,
+    "distance": "100",
+    "placement": "1",
+    "text": "Back to top",
+    "type": "image",
+    "color_bg": "#f7f7f7",
+    "color_border": "#cccccc",
+    "color_text": "#333333",
+    "color_hover": "#eeeeee"
 }

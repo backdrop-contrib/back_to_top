@@ -1,12 +1,45 @@
 <?php
-
 /**
- * @file back_to_top.install
- * Installation and update functions for the back_to_top
- * Module
+ * @file
+ * Install, update, and uninstall functions for the Back To Top module.
  */
 
+/**
+ * Rename config options.
+ */
+function back_to_top_update_1200() {
+  $config = config('back_to_top.settings');
 
+  $config->set('disable_mobile', $config->get('back_to_top_prevent_on_mobile'));
+  $config->set('disable_admin', $config->get('back_to_top_prevent_in_admin'));
+  $config->set('disable_front', $config->get('back_to_top_prevent_in_front'));
+  $config->set('distance', $config->get('back_to_top_button_trigger'));
+  $config->set('placement', $config->get('back_to_top_button_place'));
+  $config->set('text', $config->get('back_to_top_button_text'));
+  $config->set('type', $config->get('back_to_top_button_type'));
+  $config->set('color_bg', $config->get('back_to_top_bg_color'));
+  $config->set('color_border', $config->get('back_to_top_border_color'));
+  $config->set('color_hover', $config->get('back_to_top_hover_color'));
+  $config->set('color_text', $config->get('back_to_top_text_color'));
+
+  $config->clear('back_to_top_prevent_on_mobile');
+  $config->clear('back_to_top_prevent_in_admin');
+  $config->clear('back_to_top_prevent_in_front');
+  $config->clear('back_to_top_button_trigger');
+  $config->clear('back_to_top_button_place');
+  $config->clear('back_to_top_button_text');
+  $config->clear('back_to_top_button_type');
+  $config->clear('back_to_top_bg_color');
+  $config->clear('back_to_top_border_color');
+  $config->clear('back_to_top_hover_color');
+  $config->clear('back_to_top_text_color');
+
+  $config->save();
+}
+
+/**
+ * Convert variables to config.
+ */
 function back_to_top_update_1000() {
   $config = config('back_to_top.settings');
 
@@ -14,15 +47,14 @@ function back_to_top_update_1000() {
   $config->set('back_to_top_prevent_in_admin', update_variable_get('back_to_top_prevent_in_admin'));
   $config->set('back_to_top_prevent_in_front', update_variable_get('back_to_top_prevent_in_front'));
   $config->set('back_to_top_button_trigger', update_variable_get('back_to_top_button_trigger'));
-
   $config->set('back_to_top_button_place', update_variable_get('back_to_top_button_place'));
   $config->set('back_to_top_button_text', update_variable_get('back_to_top_button_text'));
   $config->set('back_to_top_button_type', update_variable_get('back_to_top_button_type'));
   $config->set('back_to_top_bg_color', update_variable_get('back_to_top_bg_color'));
-
   $config->set('back_to_top_border_color', update_variable_get('back_to_top_border_color'));
   $config->set('back_to_top_hover_color', update_variable_get('back_to_top_hover_color'));
   $config->set('back_to_top_text_color', update_variable_get('back_to_top_text_color'));
+
   $config->save();
 
   // Delete variables.
@@ -30,13 +62,12 @@ function back_to_top_update_1000() {
   update_variable_del('back_to_top_prevent_in_admin');
   update_variable_del('back_to_top_prevent_in_front');
   update_variable_del('back_to_top_button_trigger');
-
   update_variable_del('back_to_top_button_place');
   update_variable_del('back_to_top_button_text');
   update_variable_del('back_to_top_button_type');
   update_variable_del('back_to_top_bg_color');
-
   update_variable_del('back_to_top_border_color');
   update_variable_del('back_to_top_hover_color');
   update_variable_del('back_to_top_text_color');
 }
+

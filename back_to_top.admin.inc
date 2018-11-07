@@ -1,142 +1,123 @@
 <?php
-
 /**
  * @file
- * Contains the administration pages for Back To Top.
- *
+ * Admin page callbacks for the Back To Top module.
  */
 
-function back_to_top_settings($form_state) {
+function back_to_top_settings($form, &$form_state) {
+  $config = config('back_to_top.settings');
+  $attributes = 'style="margin-bottom: 30px;"';
 
-  // Include Farbtastic color picker library and other necessary resources.
+  // Add libraries, JS & CSS.
   backdrop_add_library('system', 'farbtastic');
   backdrop_add_js(backdrop_get_path('module', 'back_to_top') . '/js/back_to_top.admin.js');
-  backdrop_add_css(backdrop_get_path('module', 'back_to_top') . '/css/back_to_top.admin.css');
 
-  $form['back_to_top_prevent_on_mobile'] = array(
+  $form['#config'] = 'back_to_top.settings';
+  $form['disable_mobile'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Prevent on mobile and touch devices'),
-    '#description' => t('Do you want to prevent Back To Top on touch devices?'),
-    '#default_value' => config_get('back_to_top.settings', 'back_to_top_prevent_on_mobile'),
+    '#title' => t('Disable on mobile and touch devices'),
+    '#description' => t('Uses <a href="http://mobiledetect.net/" target="_blank">mobiledetect.net</a> to detect mobile/touch devices and disables Back To Top on them.'),
+    '#default_value' => $config->get('disable_mobile'),
   );
-  $form['back_to_top_prevent_in_admin'] = array(
+  $form['disable_admin'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Prevent on administration pages and node edit'),
-    '#description' => t('Do you want to prevent Back To Top on admin pages?'),
-    '#default_value' => config_get('back_to_top.settings', 'back_to_top_prevent_in_admin'),
+    '#title' => t('Disable on administrative pages'),
+    '#description' => t('Disables Back To Top on all admin pages (including node add/edit forms).'),
+    '#default_value' => $config->get('disable_admin'),
   );
-  $form['back_to_top_prevent_in_front'] = array(
+  $form['disable_front'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Prevent on front page'),
-    '#description' => t('Do you want to prevent Back To Top on front page?'),
-    '#default_value' => config_get('back_to_top.settings', 'back_to_top_prevent_in_front'),
+    '#title' => t('Disable on front page'),
+    '#default_value' => $config->get('disable_front'),
   );
-  $form['back_to_top_button_trigger'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Trigger'),
-    '#description' => t('Set the number of pixel which trigger the Back To Top button default 100'),
-    '#default_value' => config_get('back_to_top.settings', 'back_to_top_button_trigger'),
-    '#size' => 10,
-    '#maxlength' => 4,
+  $form['distance'] = array(
+    '#type' => 'number',
+    '#title' => t('Distance'),
+    '#description' => t('The distance (in pixels) you must scroll down before the Back To Top button will be displayed.'),
+    '#default_value' => $config->get('distance'),
+    '#min' => 0,
+    '#max' => 999,
+    '#field_suffix' => t('px'),
   );
-  $form['back_to_top_button_place'] = array(
-    '#title' => t('Placement'),
-    '#description' => t('Where should the Back To Top button appear?'),
+  $form['placement'] = array(
     '#type' => 'select',
+    '#title' => t('Placement'),
+    '#description' => t('Where on the screen the Back To Top button will be displayed.'),
     '#options' => array(
       1 => t('Bottom right'),
       2 => t('Bottom left'),
-      3 => t('Botton center'),
+      3 => t('Bottom center'),
       4 => t('Top right'),
       5 => t('Top left'),
       6 => t('Top center'),
-      7 => t('Mid right'),
-      8 => t('Mid left'),
-      9 => t('Mid center'),
+      7 => t('Middle right'),
+      8 => t('Middle left'),
+      9 => t('Middle center'),
     ),
-    '#default_value' => config_get('back_to_top.settings', 'back_to_top_button_place'),
+    '#default_value' => $config->get('placement'),
   );
-  $form['back_to_top_button_text'] = array(
+  $form['text'] = array(
     '#type' => 'textfield',
-    '#title' => 'Button text',
-    '#description' => 'Set the text of the Back To Top button',
-    '#default_value' => config_get('back_to_top.settings', 'back_to_top_button_text'),
+    '#title' => t('Text'),
+    '#description' => t('The text to display for the button (displayed as title text for the image button type).'),
+    '#default_value' => $config->get('text'),
     '#size' => 30,
-    '#maxlength' => 30,
   );
-  $form['back_to_top_button_type'] = array(
+  $form['type'] = array(
     '#type' => 'radios',
-    '#title' => t('Do you want Back To Top to use a PNG-24 image or a Text/Css button?'),
+    '#title' => t('Type'),
+    '#description' => t('Display the button using an image or text/CSS.'),
     '#options' => array(
-    'image' => t('Image (default)'),
-    'text' => t('Text/Css')
+      'image' => t('Image'),
+      'text' => t('Text/CSS'),
     ),
-    '#default_value' => config_get('back_to_top.settings', 'back_to_top_button_type'),
+    '#default_value' => $config->get('type'),
   );
-
-  // Wrap Text/Css button settings in a fieldset.
-  $form['text_button'] = array(
+  $form['text_settings'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Text/Css button settings'),
-    '#collapsible' => TRUE,
-    '#collapsed' => ($form['back_to_top_button_type']['#default_value'] == 'image' ? TRUE : FALSE),
+    '#title' => t('Text/CSS settings'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="type"]' => array(
+          'value' => 'text',
+        ),
+      ),
+    ),
   );
-  $form['text_button']['back_to_top_bg_color'] = array(
+  $form['text_settings']['color_bg'] = array(
     '#type' => 'textfield',
     '#title' => t('Background color'),
-    '#description' => t('Button background color default #F7F7F7'),
-    '#default_value' => config_get('back_to_top.settings', 'back_to_top_bg_color'),
+    '#default_value' => $config->get('color_bg'),
     '#size' => 10,
     '#maxlength' => 7,
-    '#suffix' => '<div class="color-field" id="back_to_top_bg_color"></div>',
+    '#suffix' => '<div id="color_bg" ' . $attributes . '></div>',
   );
-  $form['text_button']['back_to_top_border_color'] = array(
+  $form['text_settings']['color_border'] = array(
     '#type' => 'textfield',
     '#title' => t('Border color'),
-    '#description' => t('Border color default #CCCCCC'),
-    '#default_value' => config_get('back_to_top.settings', 'back_to_top_border_color'),
+    '#default_value' => $config->get('color_border'),
     '#size' => 10,
     '#maxlength' => 7,
-    '#suffix' => '<div class="color-field" id="back_to_top_border_color"></div>',
+    '#suffix' => '<div id="color_border" ' . $attributes . '></div>',
   );
-  $form['text_button']['back_to_top_hover_color'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Hover color'),
-    '#description' => t('Hover color default #EEEEEE'),
-    '#default_value' => config_get('back_to_top.settings', 'back_to_top_hover_color'),
-    '#size' => 10,
-    '#maxlength' => 7,
-    '#suffix' => '<div class="color-field" id="back_to_top_hover_color"></div>',
-  );
-  $form['text_button']['back_to_top_text_color'] = array(
+  $form['text_settings']['color_text'] = array(
     '#type' => 'textfield',
     '#title' => t('Text color'),
-    '#description' => t('Text color default #333333'),
-    '#default_value' => config_get('back_to_top.settings', 'back_to_top_text_color'),
+    '#default_value' => $config->get('color_text'),
     '#size' => 10,
     '#maxlength' => 7,
-    '#suffix' => '<div class="color-field" id="back_to_top_text_color"></div>',
+    '#suffix' => '<div id="color_text" ' . $attributes . '></div>',
   );
-  
-  $form['actions']['#type'] = 'actions';
-  $form['actions']['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Save configuration'),
+  $form['text_settings']['color_hover'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Hover color'),
+    '#description' => t("The color of the button's background and border when hovered over."),
+    '#default_value' => $config->get('color_hover'),
+    '#size' => 10,
+    '#maxlength' => 7,
+    '#suffix' => '<div id="color_hover" ' . $attributes . '></div>',
   );
-  return $form;
+
+  return system_settings_form($form);
 }
 
-/**
- * Submit handler for module_settings_form().
- */
-function back_to_top_settings_submit($form, &$form_state) {
-$config = config('back_to_top.settings');
-foreach ($form_state['values'] as $key => $value)
-{
-$config->set($key, $value);
-}
-
-$config->save();
-backdrop_set_message(t('The configuration options have been saved.'));
-}
-?>
