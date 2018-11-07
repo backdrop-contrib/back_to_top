@@ -1,8 +1,8 @@
 {
     "_config_name": "back_to_top.settings",
-"back_to_top_prevent_on_mobile": "TRUE",
-"back_to_top_prevent_in_admin": "TRUE",
-"back_to_top_prevent_in_front": "FALSE",
+"back_to_top_prevent_on_mobile": true,
+"back_to_top_prevent_in_admin": true,
+"back_to_top_prevent_in_front": false,
 "back_to_top_button_trigger": "100",
 
 "back_to_top_button_place": "1",
