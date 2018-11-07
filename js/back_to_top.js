@@ -9,7 +9,7 @@ Backdrop.behaviors.backToTop = {
   attach: function(context, settings) {
 
     var $settings = Backdrop.settings.back_to_top;
-    var $title = ($settings.type == 'image') ? Backdrop.t($settings.text) : '';
+    var $title = ($settings.title) ? Backdrop.t($settings.text) : '';
     var $page = $('html, body');
 
     // Add button.

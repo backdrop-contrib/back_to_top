@@ -63,6 +63,12 @@ function back_to_top_settings($form, &$form_state) {
     '#default_value' => $config->get('text'),
     '#size' => 30,
   );
+  $form['title'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Title text'),
+    '#description' => t("Add the button text to a 'title' attribute to display on hover."),
+    '#default_value' => $config->get('title'),
+  );
   $form['type'] = array(
     '#type' => 'radios',
     '#title' => t('Type'),

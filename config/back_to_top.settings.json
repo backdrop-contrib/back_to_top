@@ -6,6 +6,7 @@
     "distance": "100",
     "placement": "1",
     "text": "Back to top",
+    "title": 1,
     "type": "image",
     "color_bg": "#f7f7f7",
     "color_border": "#cccccc",

@@ -77,6 +77,7 @@ function back_to_top_init() {
     'back_to_top' => array(
       'distance' => $config->get('distance'),
       'text' => $config->get('text'),
+      'title' => $config->get('title'),
       'type' => $config->get('type'),
     ),
   );
