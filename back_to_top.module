@@ -277,17 +277,3 @@ function back_to_top_permission() {
     ),
   );
 }
-
-/**
- * Implements hook_install().
- *
- * Add default permission for access settings to administrator
- */
-function back_to_top_install() {
-  // rid=3 => administrator.
-  user_role_change_permissions(3,
-    array(
-      'access back_to_top settings' => TRUE,
-    )
-  );
-}
