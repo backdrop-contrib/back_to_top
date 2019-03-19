@@ -43,7 +43,7 @@ function back_to_top_menu() {
  */
 function back_to_top_page_build() {
   $settings = array(
-    'back_to_top_button_text' => variable_get('back_to_top_button_text', 'Back to top'),
+    'back_to_top_button_text' => check_plain(variable_get('back_to_top_button_text', 'Back to top')),
   );
   if (variable_get('back_to_top_prevent_on_mobile', TRUE) && is_mobile()) {
     return FALSE;
