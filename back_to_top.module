@@ -45,7 +45,7 @@ function back_to_top_init() {
     'back_to_top_prevent_on_mobile' => config_get('back_to_top.settings', 'back_to_top_prevent_on_mobile'),
     'back_to_top_prevent_in_admin' => config_get('back_to_top.settings', 'back_to_top_prevent_in_admin'),
     'back_to_top_button_type' => config_get('back_to_top.settings', 'back_to_top_button_type'),
-    'back_to_top_button_text' => config_get('back_to_top.settings', 'back_to_top_button_text'),
+    'back_to_top_button_text' => check_plain(config_get('back_to_top.settings', 'back_to_top_button_text')),
   );
   if (config_get('back_to_top.settings', 'back_to_top_prevent_on_mobile') && (is_mobile())) {
     return FALSE;
