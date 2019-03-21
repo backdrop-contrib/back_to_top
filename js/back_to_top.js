@@ -14,7 +14,7 @@ Backdrop.behaviors.backToTop = {
 
     // Add button.
     if (!$('#backtotop').length) {
-      $('body').append('<div id="backtotop" class="' + $settings.type + '" title="' + $title + '">' + Backdrop.t($settings.text) + '</div>');
+      $('body').append('<div id="backtotop" class="' + $settings.type + '" title="' + $title + '">' + Backdrop.checkPlain($settings.text) + '</div>');
     }
 
     // Fade button in & out on scroll.
