@@ -76,7 +76,7 @@ function back_to_top_init() {
   $settings = array(
     'back_to_top' => array(
       'distance' => $config->get('distance'),
-      'text' => $config->get('text'),
+      'text' => check_plain($config->get('text')),
       'title' => $config->get('title'),
       'type' => $config->get('type'),
     ),
