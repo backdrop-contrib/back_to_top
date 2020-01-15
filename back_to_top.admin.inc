@@ -86,8 +86,8 @@ function back_to_top_settings($form_state) {
   );
   $form['back_to_top_button_text'] = array(
     '#type' => 'textfield',
-    '#title' => 'Button text',
-    '#description' => 'Set the text of the Back To Top button',
+    '#title' => t('Button text'),
+    '#description' => t('Set the text of the Back To Top button'),
     '#default_value' => variable_get('back_to_top_button_text', "Back to top"),
     '#size' => 30,
     '#maxlength' => 128,
