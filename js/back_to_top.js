@@ -9,9 +9,9 @@
       }
 			$(window).scroll(function() {
 				if($(this).scrollTop() > Drupal.settings.back_to_top.back_to_top_button_trigger) {
-					$('#backtotop').fadeIn();	
+					$('#backtotop').fadeIn();
 				} else {
-					$('#backtotop').fadeOut();
+					$('#backtotop').stop(true).fadeOut();
 				}
 			});
 
