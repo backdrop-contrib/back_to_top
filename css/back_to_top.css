@@ -1,5 +1,6 @@
 #backtotop {
   background: url(../backtotop.png) no-repeat center center;
+  border: 0;
   bottom: 20px;
   cursor: pointer;
   display: none;
@@ -13,6 +14,11 @@
 
 #backtotop:hover {
   opacity: 0.8;
+}
+
+#backtotop:focus {
+  opacity: 0.6;
+  outline: none;
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
