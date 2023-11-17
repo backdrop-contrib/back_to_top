@@ -14,7 +14,7 @@ Backdrop.behaviors.backToTop = {
 
     // Add button.
     if (!$('#backtotop').length) {
-      $('body').append('<div id="backtotop" class="' + $settings.type + '" title="' + $title + '">' + Backdrop.t($settings.text) + '</div>');
+      $('body').append('<button id="backtotop" class="' + $settings.type + '" title="' + $title + '">' + Backdrop.t($settings.text) + '</button>');
     }
 
     // Fade button in & out on scroll.
@@ -23,7 +23,7 @@ Backdrop.behaviors.backToTop = {
         $('#backtotop').fadeIn();
       }
       else {
-        $('#backtotop').fadeOut();
+        $('#backtotop').stop(true).fadeOut();
       }
     });
 
@@ -44,4 +44,3 @@ Backdrop.behaviors.backToTop = {
 };
 
 })(jQuery);
-
