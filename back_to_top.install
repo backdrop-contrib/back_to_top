@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file back_to_top.install
+ * Installation and update functions for the back_to_top
+ * Module
+ */
+
+
+function back_to_top_update_1000() {
+  $config = config('back_to_top.settings');
+
+  $config->set('back_to_top_prevent_on_mobile', update_variable_get('back_to_top_prevent_on_mobile'));
+  $config->set('back_to_top_prevent_in_admin', update_variable_get('back_to_top_prevent_in_admin'));
+  $config->set('back_to_top_prevent_in_front', update_variable_get('back_to_top_prevent_in_front'));
+  $config->set('back_to_top_button_trigger', update_variable_get('back_to_top_button_trigger'));
+
+  $config->set('back_to_top_button_place', update_variable_get('back_to_top_button_place'));
+  $config->set('back_to_top_button_text', update_variable_get('back_to_top_button_text'));
+  $config->set('back_to_top_button_type', update_variable_get('back_to_top_button_type'));
+  $config->set('back_to_top_bg_color', update_variable_get('back_to_top_bg_color'));
+
+  $config->set('back_to_top_border_color', update_variable_get('back_to_top_border_color'));
+  $config->set('back_to_top_hover_color', update_variable_get('back_to_top_hover_color'));
+  $config->set('back_to_top_text_color', update_variable_get('back_to_top_text_color'));
+  $config->save();
+
+  // Delete variables.
+  update_variable_del('back_to_top_prevent_on_mobile');
+  update_variable_del('back_to_top_prevent_in_admin');
+  update_variable_del('back_to_top_prevent_in_front');
+  update_variable_del('back_to_top_button_trigger');
+
+  update_variable_del('back_to_top_button_place');
+  update_variable_del('back_to_top_button_text');
+  update_variable_del('back_to_top_button_type');
+  update_variable_del('back_to_top_bg_color');
+
+  update_variable_del('back_to_top_border_color');
+  update_variable_del('back_to_top_hover_color');
+  update_variable_del('back_to_top_text_color');
+}

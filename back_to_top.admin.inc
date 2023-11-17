@@ -9,15 +9,15 @@
 function back_to_top_settings($form_state) {
 
   // Include Farbtastic color picker library and other necessary resources.
-  drupal_add_library('system', 'farbtastic');
-  drupal_add_js(drupal_get_path('module', 'back_to_top') . '/js/back_to_top.admin.js');
-  drupal_add_css(drupal_get_path('module', 'back_to_top') . '/css/back_to_top.admin.css');
+  backdrop_add_library('system', 'farbtastic');
+  backdrop_add_js(backdrop_get_path('module', 'back_to_top') . '/js/back_to_top.admin.js');
+  backdrop_add_css(backdrop_get_path('module', 'back_to_top') . '/css/back_to_top.admin.css');
 
   $form['back_to_top_prevent_on_mobile'] = array(
     '#type' => 'checkbox',
     '#title' => t('Prevent on mobile and touch devices'),
     '#description' => t('Do you want to prevent Back To Top on touch devices?'),
-    '#default_value' => variable_get('back_to_top_prevent_on_mobile', TRUE),
+    '#default_value' => config_get('back_to_top.settings', 'back_to_top_prevent_on_mobile'),
   );
   $form['back_to_top_prevent_on_non_mobile'] = array(
     '#type' => 'checkbox',
@@ -29,13 +29,13 @@ function back_to_top_settings($form_state) {
     '#type' => 'checkbox',
     '#title' => t('Prevent on administration pages and node edit'),
     '#description' => t('Do you want to prevent Back To Top on admin pages?'),
-    '#default_value' => variable_get('back_to_top_prevent_in_admin', TRUE),
+    '#default_value' => config_get('back_to_top.settings', 'back_to_top_prevent_in_admin'),
   );
   $form['back_to_top_prevent_in_front'] = array(
     '#type' => 'checkbox',
     '#title' => t('Prevent on front page'),
     '#description' => t('Do you want to prevent Back To Top on front page?'),
-    '#default_value' => variable_get('back_to_top_prevent_in_front', FALSE),
+    '#default_value' => config_get('back_to_top.settings', 'back_to_top_prevent_in_front'),
   );
   $options = array(
     BACK_TO_TOP_VISIBILITY_NOTLISTED => t('All pages except those listed'),
@@ -63,7 +63,7 @@ function back_to_top_settings($form_state) {
     '#type' => 'textfield',
     '#title' => t('Trigger'),
     '#description' => t('Set the number of pixel which trigger the Back To Top button default 100'),
-    '#default_value' => variable_get('back_to_top_button_trigger', 100),
+    '#default_value' => config_get('back_to_top.settings', 'back_to_top_button_trigger'),
     '#size' => 10,
     '#maxlength' => 4,
   );
@@ -74,7 +74,7 @@ function back_to_top_settings($form_state) {
     '#options' => array(
       1 => t('Bottom right'),
       2 => t('Bottom left'),
-      3 => t('Bottom center'),
+      3 => t('Botton center'),
       4 => t('Top right'),
       5 => t('Top left'),
       6 => t('Top center'),
@@ -82,13 +82,13 @@ function back_to_top_settings($form_state) {
       8 => t('Mid left'),
       9 => t('Mid center'),
     ),
-    '#default_value' => variable_get('back_to_top_button_place', 1),
+    '#default_value' => config_get('back_to_top.settings', 'back_to_top_button_place'),
   );
   $form['back_to_top_button_text'] = array(
     '#type' => 'textfield',
     '#title' => t('Button text'),
     '#description' => t('Set the text of the Back To Top button'),
-    '#default_value' => variable_get('back_to_top_button_text', "Back to top"),
+    '#default_value' => config_get('back_to_top.settings', 'back_to_top_button_text'),
     '#size' => 30,
     '#maxlength' => 128,
   );
@@ -99,7 +99,7 @@ function back_to_top_settings($form_state) {
       'image' => t('Image (default)'),
       'text' => t('Text/Css'),
     ),
-    '#default_value' => variable_get('back_to_top_button_type', 'image'),
+    '#default_value' => config_get('back_to_top.settings', 'back_to_top_button_type'),
   );
 
   // Wrap Text/Css button settings in a fieldset.
@@ -113,7 +113,7 @@ function back_to_top_settings($form_state) {
     '#type' => 'textfield',
     '#title' => t('Background color'),
     '#description' => t('Button background color default #F7F7F7'),
-    '#default_value' => variable_get('back_to_top_bg_color', '#F7F7F7'),
+    '#default_value' => config_get('back_to_top.settings', 'back_to_top_bg_color'),
     '#size' => 10,
     '#maxlength' => 7,
     '#suffix' => '<div class="color-field" id="back_to_top_bg_color"></div>',
@@ -122,7 +122,7 @@ function back_to_top_settings($form_state) {
     '#type' => 'textfield',
     '#title' => t('Border color'),
     '#description' => t('Border color default #CCCCCC'),
-    '#default_value' => variable_get('back_to_top_border_color', '#CCCCCC'),
+    '#default_value' => config_get('back_to_top.settings', 'back_to_top_border_color'),
     '#size' => 10,
     '#maxlength' => 7,
     '#suffix' => '<div class="color-field" id="back_to_top_border_color"></div>',
@@ -131,7 +131,7 @@ function back_to_top_settings($form_state) {
     '#type' => 'textfield',
     '#title' => t('Hover color'),
     '#description' => t('Hover color default #EEEEEE'),
-    '#default_value' => variable_get('back_to_top_hover_color', '#EEEEEE'),
+    '#default_value' => config_get('back_to_top.settings', 'back_to_top_hover_color'),
     '#size' => 10,
     '#maxlength' => 7,
     '#suffix' => '<div class="color-field" id="back_to_top_hover_color"></div>',
@@ -140,10 +140,31 @@ function back_to_top_settings($form_state) {
     '#type' => 'textfield',
     '#title' => t('Text color'),
     '#description' => t('Text color default #333333'),
-    '#default_value' => variable_get('back_to_top_text_color', '#333333'),
+    '#default_value' => config_get('back_to_top.settings', 'back_to_top_text_color'),
     '#size' => 10,
     '#maxlength' => 7,
     '#suffix' => '<div class="color-field" id="back_to_top_text_color"></div>',
   );
-  return system_settings_form($form);
+
+  $form['actions']['#type'] = 'actions';
+  $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save configuration'),
+  );
+  return $form;
 }
+
+/**
+ * Submit handler for module_settings_form().
+ */
+function back_to_top_settings_submit($form, &$form_state) {
+$config = config('back_to_top.settings');
+foreach ($form_state['values'] as $key => $value)
+{
+$config->set($key, $value);
+}
+
+$config->save();
+backdrop_set_message(t('The configuration options have been saved.'));
+}
+?>

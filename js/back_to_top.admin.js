@@ -1,5 +1,5 @@
 (function ($) {
-    Drupal.behaviors.backtotop_admin = {
+    Backdrop.behaviors.backtotop_admin = {
         attach: function(context) {
             $(document).ready(function() {
                 $("#back_to_top_bg_color").farbtastic("#edit-back-to-top-bg-color");

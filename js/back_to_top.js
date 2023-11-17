@@ -1,14 +1,14 @@
 (function ($) {
-	Drupal.behaviors.backtotop = {
+	Backdrop.behaviors.backtotop = {
 		attach: function(context) {
 			var exist= jQuery('#backtotop').length;
       if(exist == 0) {
         $("body", context).once(function() {
-          $(this).append("<button id='backtotop'>"+Drupal.t(Drupal.settings.back_to_top.back_to_top_button_text)+"</button>");
+          $(this).append("<button id='backtotop'>"+Backdrop.t(Backdrop.settings.back_to_top.back_to_top_button_text)+"</button>");
         });
       }
 			$(window).scroll(function() {
-				if($(this).scrollTop() > Drupal.settings.back_to_top.back_to_top_button_trigger) {
+				if($(this).scrollTop() > Backdrop.settings.back_to_top.back_to_top_button_trigger) {
 					$('#backtotop').fadeIn();
 				} else {
 					$('#backtotop').stop(true).fadeOut();
