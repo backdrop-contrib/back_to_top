@@ -1,31 +1,47 @@
-(function ($) {
-	Backdrop.behaviors.backtotop = {
-		attach: function(context) {
-			var exist= jQuery('#backtotop').length;
-      if(exist == 0) {
-        $("body", context).once(function() {
-          $(this).append("<button id='backtotop'>"+Backdrop.t(Backdrop.settings.back_to_top.back_to_top_button_text)+"</button>");
-        });
-      }
-			$(window).scroll(function() {
-				if($(this).scrollTop() > Backdrop.settings.back_to_top.back_to_top_button_trigger) {
-					$('#backtotop').fadeIn();
-				} else {
-					$('#backtotop').stop(true).fadeOut();
-				}
-			});
+/**
+ * @file
+ * Javascript for the Back To Top module.
+ */
 
-      $('#backtotop', context).once(function() {
-			  $(this).click(function() {
-			    $("html, body").bind("scroll mousedown DOMMouseScroll mousewheel keyup", function() {
-            $('html, body').stop();
-          });
-          $('html,body').animate({ scrollTop: 0 }, 1200, 'easeOutQuart', function() {
-            $("html, body").unbind("scroll mousedown DOMMouseScroll mousewheel keyup");
-          });
-          return false;
-			  });
-			});
-		}
-	};
+(function($) {
+
+Backdrop.behaviors.backToTop = {
+  attach: function(context, settings) {
+
+    var $settings = Backdrop.settings.back_to_top;
+    var $title = ($settings.title) ? Backdrop.t($settings.text) : '';
+    var $page = $('html, body');
+
+    // Add button.
+    if (!$('#backtotop').length) {
+      $('body').append('<div id="backtotop" class="' + $settings.type + '" title="' + $title + '">' + Backdrop.t($settings.text) + '</div>');
+    }
+
+    // Fade button in & out on scroll.
+    $(window).scroll(function() {
+      if ($(this).scrollTop() > $settings.distance) {
+        $('#backtotop').fadeIn();
+      }
+      else {
+        $('#backtotop').fadeOut();
+      }
+    });
+
+    // Scroll to top on button click.
+    $('#backtotop').click(function() {
+      $page.bind('scroll mousedown DOMMouseScroll mousewheel keyup', function() {
+        $page.stop();
+      });
+
+      $page.animate({ scrollTop: 0 }, 500, function() {
+        $page.unbind('scroll mousedown DOMMouseScroll mousewheel keyup');
+      });
+
+      return false;
+    });
+
+  }
+};
+
 })(jQuery);
+

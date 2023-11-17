@@ -1,12 +1,20 @@
-(function ($) {
-    Backdrop.behaviors.backtotop_admin = {
-        attach: function(context) {
-            $(document).ready(function() {
-                $("#back_to_top_bg_color").farbtastic("#edit-back-to-top-bg-color");
-                $("#back_to_top_border_color").farbtastic("#edit-back-to-top-border-color");
-                $("#back_to_top_hover_color").farbtastic("#edit-back-to-top-hover-color");
-                $("#back_to_top_text_color").farbtastic("#edit-back-to-top-text-color");
-            });
-        }
-    };
+/**
+ * @file
+ * Javascript for the Back To Top admin form.
+ */
+
+(function($) {
+
+Backdrop.behaviors.backToTopAdmin = {
+  attach: function(context, settings) {
+
+    $("#color_bg").farbtastic("#edit-color-bg");
+    $("#color_border").farbtastic("#edit-color-border");
+    $("#color_text").farbtastic("#edit-color-text");
+    $("#color_hover").farbtastic("#edit-color-hover");
+
+  }
+};
+
 })(jQuery);
+
