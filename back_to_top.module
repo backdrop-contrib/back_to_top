@@ -58,8 +58,7 @@ function back_to_top_init() {
 
   // Don't add JS & CSS under certain conditions.
   if ($config->get('disable_mobile') && module_exists('mobile_detect')) {
-    require_once backdrop_get_path('module', 'mobile_detect') . '/library/Mobile_Detect.php';
-    $detect = new Mobile_Detect;
+    $detect = mobile_detect_get_object();
     if ($detect->isMobile()) {
       return;
     }
