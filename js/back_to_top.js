@@ -44,12 +44,17 @@
         backToTop();
       });
 
+      var duration = 600;
+      var motionQuery = window.matchMedia('(prefers-reduced-motion)');
+      if (motionQuery.matches) {
+        duration = 0;
+      }
       $('#backtotop').once('backtotop', context).each(function () {
         $(this).click(function () {
           $("html, body").bind("scroll mousedown DOMMouseScroll mousewheel keyup", function () {
             window.cancelAnimationFrame(frame);
           });
-          scrollTo(0, 1200);
+          scrollTo(0, duration);
         });
         $(this).keyup(function (event) {
           if (event.keyCode === 13) {
@@ -75,4 +80,3 @@
   };
 
 })(jQuery);
-
