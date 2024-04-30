@@ -35,7 +35,7 @@
       var exist = $('#backtotop').length;
       if (exist == 0) {
         $('body').once('backtotop', context).each(function () {
-          $(this).append("<button id='backtotop' aria-label='" + Backdrop.t("Back to top") + "' title='" + $title + "' class='" + $settings.type + "'>" + Backdrop.t($settings.text) + "</button>");
+          $(this).append("<nav aria-label='" + Backdrop.t("Back to top") + "'><button id='backtotop' aria-label='" + Backdrop.t("Back to top") + "' title='" + $title + "' class='" + $settings.type + "'>" + Backdrop.t($settings.text) + "</button></nav>");
         });
       }
 
