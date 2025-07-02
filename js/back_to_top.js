@@ -40,7 +40,7 @@
       }
 
       backToTop();
-      $(window).scroll(function () {
+      $(window).on('scroll', function () {
         backToTop();
       });
 
@@ -50,17 +50,16 @@
         duration = 0;
       }
       $('#backtotop').once('backtotop', context).each(function () {
-        $(this).click(function () {
-          $("html, body").bind("scroll mousedown DOMMouseScroll mousewheel keyup", function () {
+        $(this).on('click', function () {
+          $("html, body").on("scroll mousedown DOMMouseScroll mousewheel keyup", function () {
             window.cancelAnimationFrame(frame);
           });
           scrollTo(0, duration);
         });
-        $(this).keyup(function (event) {
+        $(this).on('keyup', function (event) {
           if (event.keyCode === 13) {
             event.preventDefault();
-
-            $("#backtotop").click();
+            $("#backtotop").trigger('click');
           }
         });
 
