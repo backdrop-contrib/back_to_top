@@ -4,6 +4,9 @@
  * Admin page callbacks for the Back To Top module.
  */
 
+/**
+ *
+ */
 function back_to_top_settings($form, &$form_state) {
   $config = config('back_to_top.settings');
   $attributes = 'style="margin-bottom: 30px;"';
@@ -15,14 +18,10 @@ function back_to_top_settings($form, &$form_state) {
   $form['#config'] = 'back_to_top.settings';
   $form['disable_mobile'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Disable on mobile and touch devices'),
-    '#description' => t('Uses the <a href="https://backdropcms.org/project/mobile_detect" target="_blank">Mobile Detect</a> module to detect mobile/touch devices and disables Back To Top on them.'),
+    '#title' => t('Disable on mobile'),
+    '#description' => t("Don't show Back To Top on screen widths less than 768px."),
     '#default_value' => $config->get('disable_mobile'),
   );
-  if (!module_exists('mobile_detect')) {
-    $form['disable_mobile']['#disabled'] = TRUE;
-    $form['disable_mobile']['#description'] .= t('<br><strong>NOTE:</strong> The Mobile Detect module is not installed. Install it to enable this option.');
-  }
   $form['disable_admin'] = array(
     '#type' => 'checkbox',
     '#title' => t('Disable on administrative pages'),

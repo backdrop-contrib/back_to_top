@@ -32,38 +32,41 @@
 
   Backdrop.behaviors.backToTop = {
     attach: function (context, settings) {
-      var exist = $('#backtotop').length;
-      if (exist == 0) {
-        $('body').once('backtotop', context).each(function () {
-          $(this).append("<nav aria-label='" + Backdrop.t("Back to top") + "'><button id='backtotop' aria-label='" + Backdrop.t("Back to top") + "' title='" + $title + "' class='" + $settings.type + "'>" + Backdrop.t($settings.text) + "</button></nav>");
-        });
-      }
-
-      backToTop();
-      $(window).on('scroll', function () {
-        backToTop();
-      });
-
-      var duration = 600;
-      var motionQuery = window.matchMedia('(prefers-reduced-motion)');
-      if (motionQuery.matches) {
-        duration = 0;
-      }
-      $('#backtotop').once('backtotop', context).each(function () {
-        $(this).on('click', function () {
-          $("html, body").on("scroll mousedown DOMMouseScroll mousewheel keyup", function () {
-            window.cancelAnimationFrame(frame);
+      let isMobile = window.matchMedia("only screen and (max-width: 767px)").matches;
+      if (!($settings.disable_mobile && isMobile)) {
+        var exist = $('#backtotop').length;
+        if (exist == 0) {
+          $('body').once('backtotop', context).each(function () {
+            $(this).append("<nav aria-label='" + Backdrop.t("Back to top") + "'><button id='backtotop' aria-label='" + Backdrop.t("Back to top") + "' title='" + $title + "' class='" + $settings.type + "'>" + Backdrop.t($settings.text) + "</button></nav>");
           });
-          scrollTo(0, duration);
-        });
-        $(this).on('keyup', function (event) {
-          if (event.keyCode === 13) {
-            event.preventDefault();
-            $("#backtotop").trigger('click');
-          }
+        }
+
+        backToTop();
+        $(window).on('scroll', function () {
+          backToTop();
         });
 
-      });
+        var duration = 600;
+        var motionQuery = window.matchMedia('(prefers-reduced-motion)');
+        if (motionQuery.matches) {
+          duration = 0;
+        }
+        $('#backtotop').once('backtotop', context).each(function () {
+          $(this).on('click', function () {
+            $("html, body").on("scroll mousedown DOMMouseScroll mousewheel keyup", function () {
+              window.cancelAnimationFrame(frame);
+            });
+            scrollTo(0, duration);
+          });
+          $(this).on('keyup', function (event) {
+            if (event.keyCode === 13) {
+              event.preventDefault();
+              $("#backtotop").trigger('click');
+            }
+          });
+
+        });
+      }
 
       /**
        * Hide show back to top links.

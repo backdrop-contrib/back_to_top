@@ -1,6 +1,6 @@
 {
     "_config_name": "back_to_top.settings",
-    "disable_mobile": 1,
+    "disable_mobile": 0,
     "disable_admin": 1,
     "disable_front": 0,
     "distance": "100",
